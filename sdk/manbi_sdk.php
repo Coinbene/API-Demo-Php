@@ -40,6 +40,11 @@ class manBi{
             'size' => $size,
         ]);
     }
+    
+    public function markets() {
+        $markets = $this->curl->get(self::MANBI_API . 'v1/market/symbol');
+        return $markets;
+    }
 
     public function balance($account = 'exchange'){
         $data = [
@@ -73,6 +78,17 @@ class manBi{
             'orderid' => $orderid,
         ];
         $orders = $this->curl->post(self::MANBI_API.'v1/trade/order/cancel', $this->build_params($data));
+        return $orders;
+    }
+    
+    public function withdrawApply($amount, $asset, $address, $tag = "") {
+        $data = [
+            'amount' => $amount,
+            'asset' => $asset,
+            'address' => $address,
+            'tag' => $tag,
+        ];
+        $orders = $this->curl->post(self::MANBI_API . 'v1/withdraw/apply', $this->build_params($data));
         return $orders;
     }
 
